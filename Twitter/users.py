@@ -3,6 +3,9 @@ import os
 import json
 import requests
 
+# not used but another way of getting bearer token if you run:
+# export 'BEARER_TOKEN'='<your_bearer_token>'
+
 bearer_token = os.environ.get("BEARER_TOKEN")
 USER_NAME = 'SamuelLJackson'
 main_url = f'https://api.twitter.com/2/users/by/username/{USER_NAME}'
