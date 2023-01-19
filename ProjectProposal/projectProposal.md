@@ -1,6 +1,7 @@
 ## National Parks Web App Project Proposal
 National Parks Data Project
 Team Members: Paul Brichta, Lindsey Wolterstorff, and Sam Holland
+
 We’ll get national park geojson data from:
 nps boundary | nps boundary | National Park Service (arcgis.com)
 Visitation numbers will be embedded in the main map, data found here:
@@ -16,19 +17,6 @@ Choropleth visualization: number of national parks by state
 Maybe divide number of parks by square miles of the state
 
 Table with an ordered list of parks by park density
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 Page Layout:
