@@ -11,6 +11,7 @@ Create a map with geojson boundaries of each park from the above nps boundary da
 -	Event handler for clicks: Show park properties like name, visitation numbers, etc.
 -	Map will load based on accessing device’s geolocation with:
 -	Webpage will have a table below the map with articles, images, tweets, links, description, etc.
+    - API for articles: https://newsapi.org/
 
 Choropleth visualization: number of national parks by state
 
