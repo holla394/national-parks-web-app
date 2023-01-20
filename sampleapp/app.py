@@ -9,7 +9,7 @@ app = flask.Flask(__name__)
 # export 'mongo'='<my mongo password>'
 mongo_password = os.getenv('mongo')
 
-client = pymongo.MongoClient(f"mongodb+srv://sam:{mongo_password}@cluster0.khzagou.mongodb.net/?retryWrites=true&w=majority&ssl=true&ssl_cert_reqs=CERT_NONE")
+client = pymongo.MongoClient(f"mongodb+srv://sam:{mongo_password}@cluster0.khzagou.mongodb.net/?retryWrites=true&w=majority")
 db = client.natparkapp
 twitterdata = db.twitterData
 
