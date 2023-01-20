@@ -14,13 +14,13 @@ client = pymongo.MongoClient(f"mongodb+srv://sam:{mongo_password}@cluster0.khzag
 db = client.natparkapp
 twitterdata = db.twitterData
 
-logging.log(msg='###################################################')
-logging.log(msg='###################################################')
-logging.log(msg='###################################################')
-logging.log(msg='mongo connection successful')
-logging.log(msg='###################################################')
-logging.log(msg='###################################################')
-logging.log(msg='###################################################')
+# logging.log(msg='###################################################')
+# logging.log(msg='###################################################')
+# logging.log(msg='###################################################')
+# logging.log(msg='mongo connection successful')
+# logging.log(msg='###################################################')
+# logging.log(msg='###################################################')
+# logging.log(msg='###################################################')
 
 # Set route
 @app.route('/')
