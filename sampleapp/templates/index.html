@@ -1,36 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+  
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Stock!</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Stock!</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-</head>
-
-<body>
-    <div class="container text-center">
-      <h1 class="jumbotron">Inventory</h1>
-      <div>
-        <!-- write a for loop that lists out your data and accesses the values using dot notation. -->
-          {% for result in return_list[0:10] %}
-          <div class="col-lg-4">
-              <div class="card" style="width: 20rem;">
-                  <div class="card-body">
-                    <h4 class="card-title">{{ result.park.username }}</h4>
-                    {% for tweet in result.mentionData.data %}
-                    <div>
-                      <h6 class="card-subtitle mb-2 text-muted">Data: {{ tweet.text }}</h6>
-                    </div>
-                    {% endfor %}
-                  </div>
-                </div>
-            </div>
-            {% endfor %}
-
-      </div>
+  <body>
+    <div id="row1" class="col-lg-12">
+      <h1 class="jumbotron">National Parks Dashboard</h1>
+      <div id="map" class="row"></div>
     </div>
+    <div id="row2" class="row">
+        <div id="parkmetadata" class="col-lg-4">
+            <img class="img-fluid" src="https://media.istockphoto.com/photos/niagara-falls-picture-id508345252?k=6&m=508345252&s=170667a&w=0&h=bfGaBsL8VfBTLqJxFPwm8cXGaZLsgL34Ga4JSrhTtN0=">
+        </div>
+        {% for result in return_list[0:10] %}
+        <div class="col-lg-4">
+          <div class="card" style="width: 20rem;">
+              <div class="card-body">
+                <h4 class="card-title">{{ result.park.username }}</h4>
+                {% for tweet in result.mentionData.data %}
+                <div>
+                  <h6 class="card-subtitle mb-2 text-muted">Data: {{ tweet.text }}</h6>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div id="articles" class="col-lg-4">
+            <img class="img-fluid" src="https://media.istockphoto.com/photos/niagara-falls-picture-id508345252?k=6&m=508345252&s=170667a&w=0&h=bfGaBsL8VfBTLqJxFPwm8cXGaZLsgL34Ga4JSrhTtN0=">
+        </div>
+    </div>
+    <script src="../webScripts/logic.js"></script>
   </body>
-
 </html>
