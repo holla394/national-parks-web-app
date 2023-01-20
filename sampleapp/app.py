@@ -13,14 +13,6 @@ client = pymongo.MongoClient(f"mongodb+srv://sam:{mongo_password}@cluster0.khzag
 db = client.natparkapp
 twitterdata = db.twitterData
 
-print('##############################')
-print('##############################')
-print('##############################')
-print(mongo_password)
-print('##############################')
-print('##############################')
-print('##############################')
-
 # Set route
 @app.route('/')
 def index():
