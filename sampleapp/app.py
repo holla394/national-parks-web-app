@@ -1,5 +1,6 @@
 import flask
 import pymongo
+import logging
 import os
 # from config import mongo_password
 
@@ -12,6 +13,14 @@ mongo_password = os.getenv('mongo')
 client = pymongo.MongoClient(f"mongodb+srv://sam:{mongo_password}@cluster0.khzagou.mongodb.net/?retryWrites=true&w=majority")
 db = client.natparkapp
 twitterdata = db.twitterData
+
+logging.log('###################################################')
+logging.log('###################################################')
+logging.log('###################################################')
+logging.log('mongo connection successful')
+logging.log('###################################################')
+logging.log('###################################################')
+logging.log('###################################################')
 
 # Set route
 @app.route('/')
