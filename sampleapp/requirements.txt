@@ -8,10 +8,11 @@ Jinja2
 MarkupSafe
 numpy
 pandas
-psycopg2
+pymongo
 python-dateutil
 pytz
 six
 SQLAlchemy
 Werkzeug
 wincertstore
+os
