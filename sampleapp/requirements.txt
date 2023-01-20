@@ -15,4 +15,3 @@ six
 SQLAlchemy
 Werkzeug
 wincertstore
-os
