@@ -7,7 +7,7 @@ import os
 # Create an instance of our Flask app.
 app = flask.Flask(__name__)
 
-# export 'mongo'='<my mongo password>'
+# export 'mongo'='mongo1'
 mongo_password = os.getenv('mongo')
 
 client = pymongo.MongoClient(f"mongodb+srv://sam:{mongo_password}@cluster0.khzagou.mongodb.net/?retryWrites=true&w=majority")
