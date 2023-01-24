@@ -11,7 +11,8 @@ app = Flask(__name__)
 mongo_username = os.getenv('mongo_username')
 mongo_password = os.getenv('mongo_password')
 
-client = pymongo.MongoClient(f"mongodb+srv://{mongo_username}:{mongo_password}@natparkappcluster.gaw8goo.mongodb.net/?retryWrites=true&w=majority")
+client = pymongo.MongoClient(f"mongodb+srv://{mongo_username}:{mongo_password}@cluster0.khzagou.mongodb.net/?retryWrites=true&w=majority")
+
 db = client.natparkapp
 twitterdata = db.twitterData
 geojson = db.geojson
