@@ -22,7 +22,7 @@ function displayborder(parkname) {
   let geojson_api_url = `${base_url}api/v1/${parkname}`
   d3.json(geojson_api_url).then(data => {
     myMap.flyTo(new L.LatLng(data.features[0].geometry.coordinates[0][0][1],
-      data.features[0].geometry.coordinates[0][0][0]),data.features[0].area);
+      data.features[0].geometry.coordinates[0][0][0]),6);
     let plot_object = {
       "type":data.features[0].geometry.type,
       "coordinates":data.features[0].geometry.coordinates
