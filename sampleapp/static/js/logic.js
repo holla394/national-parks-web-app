@@ -1,28 +1,16 @@
-// Creating the map object
+const base_url = window.location.href;
+const parknames_url = `${base_url}/api/v1/allparknames`;
+let parkname = "Yellowstone";
+let yellowstone_coordinates = [44.423691, -110.588516];
 let myMap = L.map("map", {
-  center: [39.50, -98.35],
+  center: yellowstone_coordinates,
   zoom: 6
 });
-
-let base_url = window.location.href;
 
 // Adding the tile layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(myMap);
-
-// Use this link to get the GeoJSON data.
-// const link = "https://nationalparksgeojson01192023.s3.us-east-2.amazonaws.com/NPS_-_Land_Resources_Division_Boundary_and_Tract_Data_Service.geojson";
-
-// Getting our GeoJSON data
-// const successCb = (resp) => {
-//     console.log(resp);
-// 	L.geoJSON(resp).addTo(myMap);
-// };
-
-// const errorCb = (err) => {
-//     console.error('Error - ', err);
-// };
 
 function optionChanged(selection) {
   displayborder(selection);
@@ -33,13 +21,15 @@ function optionChanged(selection) {
 function displayborder(parkname) {
   let geojson_api_url = `${base_url}/api/v1/${parkname}`
   d3.json(geojson_api_url).then(data => {
-    L.geoJson(data.features[0].geometry.coordinates).addTo(myMap)
+    myMap.flyTo(new L.LatLng(data.features[0].geometry.coordinates[0][0][1],
+      data.features[0].geometry.coordinates[0][0][0]),data.features[0].area);
+    let plot_object = {
+      "type":data.features[0].geometry.type,
+      "coordinates":data.features[0].geometry.coordinates
+    };
+    L.geoJson(plot_object).addTo(myMap);
   })
 };
-
-names = `${base_url}/api/v1/allparknames`;
-
-let parkname = "Yellowstone National Park";
 
 function loadpage(parkname) {
   let parknames_url = `${base_url}/api/v1/allparknames`;
@@ -51,17 +41,6 @@ function loadpage(parkname) {
         });
   });
   displayborder(parkname);
-  // refreshTwitter(selection);
-  // refreshArticles(selection);
 };
-
-// function downloadObject(link, successCb, errorCb) {
-//     fetch(link)
-//       .then(response => response.json())
-//       .then(successCb)
-//       .catch(errorCb);
-// };
-
-// downloadObject(link, successCb, errorCb);
 
 loadpage(parkname);
