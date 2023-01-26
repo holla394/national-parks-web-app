@@ -18,17 +18,54 @@ function optionChanged(selection) {
   // refreshArticles(selection);
 };
 
+function generateZoom(area) {
+  // 50k
+  if(area < 50000.00){
+    return 30;
+  }
+  // 100k
+  else if(area < 100000.00){
+    return 26;
+  }
+  // 1 million
+  else if(area < 1000000.00){
+    return 21;
+  }
+  // 5 million
+  else if(area < 5000000.00){
+    return 17;
+  }
+  // 10 million
+  else if(area < 10000000.00){
+    return 12;
+  }
+  // 100 million
+  else if(area < 100000000.00) {
+    return 8;
+  }
+  else {
+    return 6;
+  }
+};
+
 function displayborder(parkname) {
   let geojson_api_url = `${base_url}api/v1/${parkname}`
   d3.json(geojson_api_url).then(data => {
-    myMap.flyTo(new L.LatLng(data.features[0].geometry.coordinates[0][0][1],
-      data.features[0].geometry.coordinates[0][0][0]),6);
+    
+    if(data.features[0].geometry.type == "Polygon") {
+      myMap.flyTo(new L.LatLng(data.features[0].geometry.coordinates[0][0][1],
+        data.features[0].geometry.coordinates[0][0][0]),generateZoom(data.features[0].area));
+    }
+    else if (data.features[0].geometry.type == "MultiPolygon") {
+      myMap.flyTo(new L.LatLng(data.features[0].geometry.coordinates[0][0][0][1],
+      data.features[0].geometry.coordinates[0][0][0][0]),generateZoom(data.features[0].area));
+    }
     let plot_object = {
       "type":data.features[0].geometry.type,
       "coordinates":data.features[0].geometry.coordinates
-    };
+    }
     L.geoJson(plot_object).addTo(myMap);
-  })
+  });
 };
 
 function loadpage(parkname) {
