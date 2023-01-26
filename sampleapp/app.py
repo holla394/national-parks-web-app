@@ -2,8 +2,6 @@ from flask import Flask, render_template, jsonify
 import pymongo
 import logging
 import os
-import ssl
-# from config import mongo_password
 
 # Create an instance of our Flask app.
 app = Flask(__name__)
@@ -13,18 +11,11 @@ app = Flask(__name__)
 mongo_username = os.getenv('mongo_username')
 mongo_password = os.getenv('mongo_password')
 
-client = pymongo.MongoClient(f"mongodb+srv://{mongo_username}:{mongo_password}@natparkappcluster.gaw8goo.mongodb.net/?retryWrites=true&w=majority")
+client = pymongo.MongoClient(f"mongodb+srv://{mongo_username}:{mongo_password}@cluster0.khzagou.mongodb.net/?retryWrites=true&w=majority")
+
 db = client.natparkapp
 twitterdata = db.twitterData
 geojson = db.geojson
-
-# logging.log(msg='###################################################')
-# logging.log(msg='###################################################')
-# logging.log(msg='###################################################')
-# logging.log(msg='mongo connection successful')
-# logging.log(msg='###################################################')
-# logging.log(msg='###################################################')
-# logging.log(msg='###################################################')
 
 # Set route
 @app.route('/')
