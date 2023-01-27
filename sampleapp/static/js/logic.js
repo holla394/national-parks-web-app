@@ -1,6 +1,7 @@
 const base_url = window.location.href;
 const parknames_url = `${base_url}/api/v1/allparknames`;
 const statenames_url = `${base_url}/api/v1/states`;
+const delay = ms => new Promise(res => setTimeout(res, ms));
 
 let parkname = "aaaYellowstone";
 let yellowstone_coordinates = [39.50, -98.35];
@@ -24,52 +25,43 @@ function optionChanged(selection) {
     // refreshArticles(selection);
 };
 
-function generateZoom(area, parkname) {
-    
-    // onEachFeature: function(layer) {
-    //     // Set the mouse events to change the map styling.
-    //     layer.on({
-    //         click: function(event) {
-    //             myMap.fitBounds(event.target.getBounds());
-    //         }
-    //     })
-    // }
-    let geojson_api_url = `${base_url}api/v1/${parkname}`
-    d3.json(geojson_api_url).then(data => {
-        return myMap.fitBounds(data.getBounds());
-    });
-
-    // area is less than 50k
+function generateZoom(area) {
+    // console.log(area)
+    // 50k
     if(area < 50000.00){
-        return 8;
+        return 30;
     }
-    // area is less than 100k
+    // 100k
     else if(area < 100000.00){
-        return 8;
+        return 26;
     }
-    // area is less than 1 million
+    // 1 million
     else if(area < 1000000.00){
-        return 8;
+        return 21;
     }
-    // area is less than 5 million
+    // 5 million
     else if(area < 5000000.00){
-        return 8;
+        return 17;
     }
-    // area is less than 10 million
+    // 10 million
     else if(area < 10000000.00){
-        return 8;
+        return 12;
     }
-    // area is less than 100 million
+    // 100 million
     else if(area < 100000000.00) {
         return 8;
     }
-    // greater than or equal to 100 million
     else {
-        return 8;
+        return 6;
     }
 };
 
-function displayborder(parkname) {
+async function fitBoundary() {
+    await delay(3000);
+    myMap.fitBounds(myMapLayer.getBounds());
+}
+
+async function displayborder(parkname) {
     if (myMapLayer) {
         myMap.removeLayer(myMapLayer);
     }
@@ -79,48 +71,27 @@ function displayborder(parkname) {
     d3.json(geojson_api_url).then(data => {
 
         if(data.features[0].geometry.type == "Polygon") {
-            myMap.panTo(new L.LatLng(
+            myMap.flyTo(new L.LatLng(
                 data.features[0].geometry.coordinates[0][0][1],
                 data.features[0].geometry.coordinates[0][0][0]),
-                10, {duration:6,animte:true}
-                //{duration: 2,easeLinearity: 1}// options:{animate:true}
-                //generateZoom(data.features[0].area, omit_state)
             );
-            // myMap.fitBounds(data.features[0].geometry.coordinates.getSouthWest(), data.features[0].geometry.coordinates.getNorthEast());
-            // myMap.panInside(new L.LatLng(
-            //     data.features[0].geometry.coordinates[0][0][0][1],
-            //     data.features[0].geometry.coordinates[0][0][0][0])//,
-            //     [0, 0]
-            // );
         }
 
         else if (data.features[0].geometry.type == "MultiPolygon") {
-            myMap.panTo(new L.LatLng(
+            myMap.flyTo(new L.LatLng(
                 data.features[0].geometry.coordinates[0][0][0][1],
                 data.features[0].geometry.coordinates[0][0][0][0]),
-                10, {duration:6,animte:true}
-                // {duration: 2,easeLinearity: 1}
-                //generateZoom(data.features[0].area, omit_state)
             );
-            // myMap.fitBounds(data.features[0].geometry.coordinates.getSouthWest(), data.features[0].geometry.coordinates.getNorthEast());
-            // myMap.panInside(new L.LatLng(
-            //     data.features[0].geometry.coordinates[0][0][0][1],
-            //     data.features[0].geometry.coordinates[0][0][0][0])//,
-            //     [0, 0]
-            // );
         }
-
-        // myMap.fitBounds(data.features[0].geometry.coordinates.getSouthWest(), data.features[0].geometry.coordinates.getNorthEast());
 
         plot_object = {
             "type":data.features[0].geometry.type,
             "coordinates":data.features[0].geometry.coordinates
         }
-        //console.log(plot_object.getBounds());
 
         myMapLayer = L.geoJson(plot_object);
         myMapLayer.addTo(myMap);
-        myMap.fitBounds(myMapLayer.getBounds());
+        fitBoundary();
 
     });
 };
