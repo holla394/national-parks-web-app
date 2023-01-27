@@ -11,13 +11,13 @@ app = Flask(__name__)
 mongo_username = os.getenv('mongo_username')
 mongo_password = os.getenv('mongo_password')
 
-uri = f"mongodb+srv://{mongo_username}:{mongo_password}@cluster0.khzagou.mongodb.net/?retryWrites=true&w=majority"
-client = pymongo.MongoClient(uri)
+uri = f"mongodb+srv://project3app:mongo1@cluster0.khzagou.mongodb.net/?retryWrites=true&w=majority"
 
-db = client.natparkapp
-twitterdata = db.twitterData
-geojson = db.geojson
-twittermatching = db.twitterMatching
+with pymongo.MongoClient(uri) as client:
+    db = client.natparkapp
+    twitterdata = db.twitterData
+    geojson = db.geojson
+    twittermatching = db.twitterMatching
 
 # Set route
 @app.route('/')

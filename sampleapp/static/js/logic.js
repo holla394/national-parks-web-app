@@ -29,12 +29,14 @@ function refreshTwitter(selection) {
   let url = base_url + `api/v1/gettweets/${omit_state}`
   d3.json(url).then( tweets => {
     if(tweets) {
-      tweets.forEach(tweet => {
         twitter_box = d3.select("#tweets");
+        twitter_box.selectAll("h5").remove();
+      tweets.forEach(tweet => {
+        // twitter_box = d3.select("#tweets"); was here, moving up above
         twitter_box.append("h5").text(tweet);
-      })
-    }
-  })
+      });
+    };
+  });
 };
 
 function generateZoom(area) {
@@ -65,7 +67,7 @@ function generateZoom(area) {
     }
     else {
         return 6;
-    }
+    };
 };
 
 async function fitBoundary() {
