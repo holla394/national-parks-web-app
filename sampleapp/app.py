@@ -2,6 +2,7 @@ from flask import Flask, render_template, jsonify
 import pymongo
 import logging
 import os
+import ssl
 
 # Create an instance of our Flask app.
 app = Flask(__name__)
@@ -11,7 +12,8 @@ app = Flask(__name__)
 mongo_username = os.getenv('mongo_username')
 mongo_password = os.getenv('mongo_password')
 
-client = pymongo.MongoClient(f"mongodb+srv://{mongo_username}:{mongo_password}@cluster0.khzagou.mongodb.net/?retryWrites=true&w=majority")
+uri = "mongodb+srv://project3app:mongo1@cluster0.khzagou.mongodb.net/?retryWrites=true&w=majority"
+client = pymongo.MongoClient(uri, ssl_cert_reqs=ssl.CERT_NONE)
 
 db = client.natparkapp
 twitterdata = db.twitterData
@@ -42,7 +44,18 @@ def park(parkname):
 @app.route('/api/v1/allparknames')
 def parknames():
     results = geojson.find()
-    parks_list = [result['parkname'] for result in results if result['parkname']]
+    parks_list = [(result['state'], result['parkname']) for result in results if (result['state'], result['parkname'])]
+
+    n = len(parks_list)
+    for i in range(n):
+        for j in range(n-i-1):
+            if parks_list[j][0] > parks_list[j + 1][0]:
+                parks_list[j], parks_list[j + 1] = parks_list[j + 1], parks_list[j]
+                
+                # for k in range(n-j-1):
+                #     if parks_list[j][k] >parks_list[j][k+1]:
+                #         parks_list[j][k], parks_list[j][k + 1] = parks_list[j][k + 1], parks_list[j][k]
+    # parks_list = [result['parkname'] for result in results if result['parkname']]
     return jsonify(parks_list)
 
 if __name__ == "__main__":
