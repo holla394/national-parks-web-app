@@ -2,7 +2,6 @@ from flask import Flask, render_template, jsonify
 import pymongo
 import logging
 import os
-import ssl
 
 # Create an instance of our Flask app.
 app = Flask(__name__)
@@ -12,8 +11,8 @@ app = Flask(__name__)
 mongo_username = os.getenv('mongo_username')
 mongo_password = os.getenv('mongo_password')
 
-uri = "mongodb+srv://project3app:mongo1@cluster0.khzagou.mongodb.net/?retryWrites=true&w=majority"
-client = pymongo.MongoClient(uri, ssl_cert_reqs=ssl.CERT_NONE)
+uri = f"mongodb+srv://{mongo_username}:{mongo_password}@cluster0.khzagou.mongodb.net/?retryWrites=true&w=majority"
+client = pymongo.MongoClient(uri)
 
 db = client.natparkapp
 twitterdata = db.twitterData
@@ -33,7 +32,7 @@ def index():
 @app.route('/api/v1/<parkname>')
 def park(parkname):
     results = geojson.find_one({'parkname':parkname})
-    # del results['_id']
+    del results['_id']
     new_dict = {
         'type':'FeatureCollection',
         'features':[results]
@@ -71,7 +70,7 @@ def tweets_by_parkname(parkname):
         tweet_text = [tweet['text'] for tweet in tweets]
         return tweet_text
     except:
-        return "Error: No Tweets Found :("
+        return ["Error: No Tweets Found :(","HAHAHAHAHAHAHAH YOU SUCK!!!!"]
 
 if __name__ == "__main__":
     # change True to False when ready for deployment

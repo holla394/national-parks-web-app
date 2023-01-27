@@ -1,9 +1,8 @@
 const base_url = window.location.href;
-const parknames_url = `${base_url}/api/v1/allparknames`;
-const statenames_url = `${base_url}/api/v1/states`;
+const parknames_url = `${base_url}api/v1/allparknames`;
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
-let parkname = "aaaYellowstone";
+let parkname = "AK,Alagnak";
 let yellowstone_coordinates = [39.50, -98.35];
 
 let myMap = L.map("map", {
@@ -21,12 +20,13 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 function optionChanged(selection) {
     displayborder(selection);
-    // refreshTwitter(selection);
+    refreshTwitter(selection);
     // refreshArticles(selection);
 };
 
 function refreshTwitter(selection) {
-  let url = base_url + `api/v1/gettweets/${selection}`
+    omit_state = selection.slice(3)
+  let url = base_url + `api/v1/gettweets/${omit_state}`
   d3.json(url).then( tweets => {
     if(tweets) {
       tweets.forEach(tweet => {
@@ -80,6 +80,7 @@ async function displayborder(parkname) {
     
     omit_state = parkname.slice(3)
     let geojson_api_url = `${base_url}api/v1/${omit_state}`
+    console.log(geojson_api_url);
     d3.json(geojson_api_url).then(data => {
 
         if(data.features[0].geometry.type == "Polygon") {
@@ -118,7 +119,41 @@ function loadpage(parkname) {
 
     });
 
-    displayborder(parkname);
+    // displayborder(parkname);
+    myMap.on('accuratepositionprogress', onAccuratePositionProgress);
+    myMap.on('accuratepositionfound', onAccuratePositionFound);
+    myMap.on('accuratepositionerror', onAccuratePositionError);
+
+    myMap.findAccuratePosition({
+        maxWait: 10000,
+        desiredAccuracy: 20
+    });
 };
+
+
+
+function onAccuratePositionError (e) {
+    addStatus(e.message, 'error');
+}
+
+function onAccuratePositionProgress (e) {
+    let message = 'Progressing … (Accuracy: ' + e.accuracy + ')';
+    addStatus(message, 'progressing');
+}
+
+function onAccuratePositionFound (e) {
+    let message = 'Most accurate position found (Accuracy: ' + e.accuracy + ')';
+    addStatus(message, 'done');
+    myMap.setView(e.latlng, 12);
+    L.marker(e.latlng).addTo(myMap);
+}
+
+function addStatus (message, className) {
+    let ul = document.getElementById('status'),
+        li = document.createElement('li');
+    li.appendChild(document.createTextNode(message));
+    ul.className = className;
+    ul.appendChild(li);
+}
 
 loadpage(parkname);

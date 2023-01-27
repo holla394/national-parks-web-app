@@ -20,8 +20,11 @@
     integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
     crossorigin=""/>
 
+    <!-- Accurate Position Plugin -->
+    <script src="../static/js/Leaflet.AccuratePosition.js"></script>
+
     <!-- Our CSS -->
-    <link rel="stylesheet" type="text/css" href="static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
   </head>
 
   <body>
@@ -31,7 +34,11 @@
       <!-- Another way -->
       <!-- <input type="button" value="Push Me" onclick="optionChanged(this.value)"> -->
       <div id="map"></div>
+    <ul id="status" class="progressing">
+      <li>Find accurate position … (Desired accuracy: 20)</li>
+    </ul>
     </div>
+    
     <div id="row2" class="row">
         <div id="parkmetadata" class="col-lg-4">
             <img class="img-fluid" src="https://media.istockphoto.com/photos/niagara-falls-picture-id508345252?k=6&m=508345252&s=170667a&w=0&h=bfGaBsL8VfBTLqJxFPwm8cXGaZLsgL34Ga4JSrhTtN0=">
@@ -43,6 +50,7 @@
             <img class="img-fluid" src="https://media.istockphoto.com/photos/niagara-falls-picture-id508345252?k=6&m=508345252&s=170667a&w=0&h=bfGaBsL8VfBTLqJxFPwm8cXGaZLsgL34Ga4JSrhTtN0=">
         </div>
     </div>
+    <script type="text/javascript" src="../static/js/new_plugin.js"></script>
     <script type="text/javascript" src="../static/js/logic.js"></script>
   </body>
 </html>
