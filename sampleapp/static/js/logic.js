@@ -18,6 +18,18 @@ function optionChanged(selection) {
   // refreshMetaData(selection);
 };
 
+function refreshTwitter(selection) {
+  let url = base_url + `api/v1/gettweets/${selection}`
+  d3.json(url).then( tweets => {
+    if(tweets) {
+      tweets.forEach(tweet => {
+        twitter_box = d3.select("#tweets");
+        twitter_box.append("h5").text(tweet);
+      })
+    }
+  })
+};
+
 function generateZoom(area) {
   // 50k
   if(area < 50000.00){
@@ -67,14 +79,15 @@ function displayborder(parkname) {
   });
 };
 
+let drop_down;
 function loadpage(parkname) {
   
   let parknames_url = `${base_url}/api/v1/allparknames`;
 
   d3.json(parknames_url).then(names => {
     names.forEach( (name) => {
-      let drop_down = d3.select("#selDataset");
-      drop_down.append("option").text(name);
+      drop_down = d3.select("#selDataset");
+      drop_down.append("option").text(`State: ${name[0]}, Park: ${name[1]}`);
     });
   });
 
