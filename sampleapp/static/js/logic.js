@@ -71,7 +71,7 @@ function generateZoom(area) {
 };
 
 async function fitBoundary() {
-    await delay(3000);
+    await delay(6000);
     myMap.fitBounds(myMapLayer.getBounds());
 }
 

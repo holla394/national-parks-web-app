@@ -5,9 +5,6 @@ import os
 
 # Create an instance of our Flask app.
 app = Flask(__name__)
-
-# export 'mongo_username'='project3app'
-# export 'mongo_password'='mongo1'
 mongo_username = os.getenv('mongo_username')
 mongo_password = os.getenv('mongo_password')
 
