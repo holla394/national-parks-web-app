@@ -80,35 +80,42 @@ async function displayborder(parkname) {
         myMap.removeLayer(myMapLayer);
     }
     
-    omit_state = parkname.slice(3)
-    let geojson_api_url = `${base_url}api/v1/${omit_state}`
-    console.log(geojson_api_url);
-    d3.json(geojson_api_url).then(data => {
+    if (parkname == "My Location"){
+        myMap.findAccuratePosition({
+            maxWait: 10000,
+            desiredAccuracy: 20
+        });
+    }
+    else {
+        omit_state = parkname.slice(3)
+        let geojson_api_url = `${base_url}api/v1/${omit_state}`
+        d3.json(geojson_api_url).then(data => {
 
-        if(data.features[0].geometry.type == "Polygon") {
-            myMap.flyTo(new L.LatLng(
-                data.features[0].geometry.coordinates[0][0][1],
-                data.features[0].geometry.coordinates[0][0][0]),
-            );
-        }
+            if(data.features[0].geometry.type == "Polygon") {
+                myMap.flyTo(new L.LatLng(
+                    data.features[0].geometry.coordinates[0][0][1],
+                    data.features[0].geometry.coordinates[0][0][0]),
+                );
+            }
 
-        else if (data.features[0].geometry.type == "MultiPolygon") {
-            myMap.flyTo(new L.LatLng(
-                data.features[0].geometry.coordinates[0][0][0][1],
-                data.features[0].geometry.coordinates[0][0][0][0]),
-            );
-        }
+            else if (data.features[0].geometry.type == "MultiPolygon") {
+                myMap.flyTo(new L.LatLng(
+                    data.features[0].geometry.coordinates[0][0][0][1],
+                    data.features[0].geometry.coordinates[0][0][0][0]),
+                );
+            }
 
-        plot_object = {
-            "type":data.features[0].geometry.type,
-            "coordinates":data.features[0].geometry.coordinates
-        }
+            plot_object = {
+                "type":data.features[0].geometry.type,
+                "coordinates":data.features[0].geometry.coordinates
+            }
 
-        myMapLayer = L.geoJson(plot_object);
-        myMapLayer.addTo(myMap);
-        fitBoundary();
+            myMapLayer = L.geoJson(plot_object);
+            myMapLayer.addTo(myMap);
+            fitBoundary();
 
-    });
+        });
+    }
 };
 
 function onAccuratePositionError (e) {
@@ -137,22 +144,23 @@ function addStatus (message, className) {
 
 function loadpage(parkname) {
     d3.json(parknames_url).then(names => {
-
+        let drop_down = d3.select("#selDataset");
+        drop_down.append("option").text("My Location");
         names.forEach( (name) => {
-            let drop_down = d3.select("#selDataset");
+            // let drop_down = d3.select("#selDataset");
             drop_down.append("option").text(name);
         });
     });
 
     // displayborder(parkname);
-    // myMap.on('accuratepositionprogress', onAccuratePositionProgress);
-    // myMap.on('accuratepositionfound', onAccuratePositionFound);
-    // myMap.on('accuratepositionerror', onAccuratePositionError);
+    myMap.on('accuratepositionprogress', onAccuratePositionProgress);
+    myMap.on('accuratepositionfound', onAccuratePositionFound);
+    myMap.on('accuratepositionerror', onAccuratePositionError);
 
-    // myMap.findAccuratePosition({
-    //     maxWait: 10000,
-    //     desiredAccuracy: 20
-    // });
+    myMap.findAccuratePosition({
+        maxWait: 10000,
+        desiredAccuracy: 20
+    });
 };
 
 loadpage(parkname);

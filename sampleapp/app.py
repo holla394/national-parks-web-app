@@ -11,13 +11,14 @@ app = Flask(__name__)
 mongo_username = os.getenv('mongo_username')
 mongo_password = os.getenv('mongo_password')
 
-uri = f"mongodb+srv://project3app:mongo1@cluster0.khzagou.mongodb.net/?retryWrites=true&w=majority"
+uri = f"mongodb+srv://{mongo_username}:{mongo_password}@cluster0.khzagou.mongodb.net/?retryWrites=true&w=majority"
 
 with pymongo.MongoClient(uri) as client:
     db = client.natparkapp
     twitterdata = db.twitterData
     geojson = db.geojson
     twittermatching = db.twitterMatching
+    parknames_coll = db.parknames
 
 # Set route
 @app.route('/')
@@ -40,12 +41,14 @@ def park(parkname):
     return new_dict
 
 # get list of park names
-# get list of park names
 @app.route('/api/v1/allparknames')
 def parknames():
-    allnames_results = []
-    for i in range(0,429):
-        allnames_results.append(geojson.findOne())
+    # allnames_results = []
+    # for i in range(0,429):
+    #     x = parknames.find_one({'parknumber':i})
+    #     print(x['parkname'], "\n",x['state'],"\n\n\n")
+    #     allnames_results.append({"parkname":x['parkname'],'state':x['state']})
+    allnames_results = parknames_coll.find()
     parks_list = [(result['state'], result['parkname']) for result in allnames_results if (result['state'], result['parkname'])]
     n = len(parks_list)
     for i in range(n):
@@ -66,7 +69,7 @@ def tweets_by_parkname(parkname):
         tweet_text = [tweet['text'] for tweet in tweets]
         return tweet_text
     except:
-        return ["Error: No Tweets Found :(","HAHAHAHAHAHAHAH YOU SUCK!!!!"]
+        return ["Error: No Tweets Found :(","HAHAHAHAHAHAHAH YOU SUCK!!!!","NO TWEETS FOR UUUUU"]
 
 if __name__ == "__main__":
     # change True to False when ready for deployment
