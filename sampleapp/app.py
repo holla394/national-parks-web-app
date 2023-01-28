@@ -22,20 +22,20 @@ with pymongo.MongoClient(uri) as client:
 # Set route
 @app.route('/')
 def index():
-    results = twitterdata.find()
+    twitter_results = twitterdata.find()
     return_list = []
-    for result in results:
+    for result in twitter_results:
         return_list.append(result)
     return render_template("index.html", return_list=return_list)
 
 # Set route
 @app.route('/api/v1/<parkname>')
 def park(parkname):
-    results = geojson.find_one({'parkname':parkname})
-    del results['_id']
+    park_results = geojson.find_one({'parkname':parkname})
+    del park_results['_id']
     new_dict = {
         'type':'FeatureCollection',
-        'features':[results]
+        'features':[park_results]
     }
     return new_dict
 
@@ -43,19 +43,15 @@ def park(parkname):
 # get list of park names
 @app.route('/api/v1/allparknames')
 def parknames():
-    results = geojson.find()
-    parks_list = [(result['state'], result['parkname']) for result in results if (result['state'], result['parkname'])]
-
+    allnames_results = []
+    for i in range(0,429):
+        allnames_results.append(geojson.findOne())
+    parks_list = [(result['state'], result['parkname']) for result in allnames_results if (result['state'], result['parkname'])]
     n = len(parks_list)
     for i in range(n):
         for j in range(n-i-1):
             if parks_list[j][0] > parks_list[j + 1][0]:
                 parks_list[j], parks_list[j + 1] = parks_list[j + 1], parks_list[j]
-                
-                # for k in range(n-j-1):
-                #     if parks_list[j][k] >parks_list[j][k+1]:
-                #         parks_list[j][k], parks_list[j][k + 1] = parks_list[j][k + 1], parks_list[j][k]
-    # parks_list = [result['parkname'] for result in results if result['parkname']]
     return jsonify(parks_list)
 
 # twitter data api
@@ -74,4 +70,4 @@ def tweets_by_parkname(parkname):
 
 if __name__ == "__main__":
     # change True to False when ready for deployment
-    app.run(debug=True)
+    app.run(debug=False)

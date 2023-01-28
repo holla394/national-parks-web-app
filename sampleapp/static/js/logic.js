@@ -111,44 +111,21 @@ async function displayborder(parkname) {
     });
 };
 
-function loadpage(parkname) {
-    d3.json(parknames_url).then(names => {
-
-        names.forEach( (name) => {
-            let drop_down = d3.select("#selDataset");
-            drop_down.append("option").text(name);
-        });
-
-    });
-
-    // displayborder(parkname);
-    myMap.on('accuratepositionprogress', onAccuratePositionProgress);
-    myMap.on('accuratepositionfound', onAccuratePositionFound);
-    myMap.on('accuratepositionerror', onAccuratePositionError);
-
-    myMap.findAccuratePosition({
-        maxWait: 10000,
-        desiredAccuracy: 20
-    });
-};
-
-
-
 function onAccuratePositionError (e) {
     addStatus(e.message, 'error');
-}
+};
 
 function onAccuratePositionProgress (e) {
     let message = 'Progressing … (Accuracy: ' + e.accuracy + ')';
     addStatus(message, 'progressing');
-}
+};
 
 function onAccuratePositionFound (e) {
     let message = 'Most accurate position found (Accuracy: ' + e.accuracy + ')';
     addStatus(message, 'done');
     myMap.setView(e.latlng, 12);
     L.marker(e.latlng).addTo(myMap);
-}
+};
 
 function addStatus (message, className) {
     let ul = document.getElementById('status'),
@@ -156,6 +133,26 @@ function addStatus (message, className) {
     li.appendChild(document.createTextNode(message));
     ul.className = className;
     ul.appendChild(li);
-}
+};
+
+function loadpage(parkname) {
+    d3.json(parknames_url).then(names => {
+
+        names.forEach( (name) => {
+            let drop_down = d3.select("#selDataset");
+            drop_down.append("option").text(name);
+        });
+    });
+
+    // displayborder(parkname);
+    // myMap.on('accuratepositionprogress', onAccuratePositionProgress);
+    // myMap.on('accuratepositionfound', onAccuratePositionFound);
+    // myMap.on('accuratepositionerror', onAccuratePositionError);
+
+    // myMap.findAccuratePosition({
+    //     maxWait: 10000,
+    //     desiredAccuracy: 20
+    // });
+};
 
 loadpage(parkname);
