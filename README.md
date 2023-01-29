@@ -18,8 +18,10 @@ Our National Parks Web App loads with an accurate user location marker. The user
 ## Process
 
 * Housed data in MongoDB
+![Screenshot (24)](https://user-images.githubusercontent.com/113874979/215343549-7f30f6c0-aa25-4b94-b660-3e9dc5c866cf.png)
 
 * Used PyMongo with Render
+![Screenshot (22)](https://user-images.githubusercontent.com/113874979/215343171-cc045a0f-c23d-4d55-808f-6dcc17fd818a.png)
 
 * Created dropdown with state and parkname selection
 
