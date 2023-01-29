@@ -21,12 +21,12 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 function optionChanged(selection) {
     displayborder(selection);
     refreshTwitter(selection);
-    // refreshArticles(selection);
+    refreshMeta(selection);
 };
 
 function refreshTwitter(selection) {
-    omit_state = selection.slice(3)
-  let url = base_url + `api/v1/gettweets/${omit_state}`
+    omit_state = selection.slice(3);
+  let url = base_url + `api/v1/parktweets/${omit_state}`;
   d3.json(url).then( tweets => {
     if(tweets) {
         twitter_box = d3.select("#tweets");
@@ -35,6 +35,31 @@ function refreshTwitter(selection) {
         // twitter_box = d3.select("#tweets"); was here, moving up above
         twitter_box.append("h5").text(tweet);
       });
+    };
+  });
+};
+
+function refreshTwitter2(selection) {
+    omit_state = selection.slice(3);
+    twitter-widgets.createTimeline(
+        {
+          sourceType: "profile",
+          screenName: omit_state
+        },
+        document.getElementById("tweets")
+      );
+};
+
+function refreshMeta(selection) {
+    omit_state = selection.slice(3)
+  let url = base_url + `api/v1/parkmeta/${omit_state}`
+  d3.json(url).then( meta_data => {
+    if(meta_data) {
+        meta_box = d3.select("#parkmeta");
+        meta_box.selectAll("h5").remove();
+        meta_data.forEach(meta => {
+            meta_box.append("h5").text(meta);
+        });
     };
   });
 };
@@ -88,7 +113,7 @@ async function displayborder(parkname) {
     }
     else {
         omit_state = parkname.slice(3)
-        let geojson_api_url = `${base_url}api/v1/${omit_state}`
+        let geojson_api_url = `${base_url}api/v1/parkgeo/${omit_state}`
         d3.json(geojson_api_url).then(data => {
 
             if(data.features[0].geometry.type == "Polygon") {

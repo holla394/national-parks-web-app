@@ -1,5 +1,23 @@
 {
   "dependencies": {
-    "mongodb": "^4.13.0"
-  }
+    "mongodb": "^4.13.0",
+    "twitter-widgets": "^2.0.0"
+  },
+  "name": "national-parks-web-app",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "console.log(\"asdb\")"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/holla394/national-parks-web-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/holla394/national-parks-web-app/issues"
+  },
+  "homepage": "https://github.com/holla394/national-parks-web-app#readme"
 }

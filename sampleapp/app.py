@@ -26,9 +26,9 @@ def index():
         return_list.append(result)
     return render_template("index.html", return_list=return_list)
 
-# Set route
-@app.route('/api/v1/<parkname>')
-def park(parkname):
+# GeoJson Data API
+@app.route('/api/v1/parkgeo/<parkname>')
+def parkgeo(parkname):
     park_results = geojson.find_one({'parkname':parkname})
     del park_results['_id']
     new_dict = {
@@ -37,7 +37,20 @@ def park(parkname):
     }
     return new_dict
 
-# get list of park names
+# Park Metadata API
+@app.route('/api/v1/parkmeta/<parkname>')
+def parkmeta(parkname):
+    park_results = geojson.find_one({'parkname':parkname})
+    del park_results['_id']
+    meta_list = [f"Park Name: {park_results['parkname']}",
+        f"State: {park_results['state']}",
+        f"Region: {park_results['region']}",
+        f"Park Name: {park_results['park_type']}",
+        f"Area (square meters): {park_results['area']}",
+        f"Park Website: {park_results['park_url']}"]
+    return meta_list
+
+# List of park names API
 @app.route('/api/v1/allparknames')
 def parknames():
     # allnames_results = []
@@ -55,7 +68,7 @@ def parknames():
     return jsonify(parks_list)
 
 # twitter data api
-@app.route('/api/v1/gettweets/<parkname>')
+@app.route('/api/v1/parktweets/<parkname>')
 def tweets_by_parkname(parkname):
     match_data = twittermatching.find(filter = {'park':parkname})
     try:
