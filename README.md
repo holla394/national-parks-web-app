@@ -31,9 +31,10 @@ Our National Parks Web Application initially loads the web page with an accurate
 * Used PyMongo with Render to host the web app
 ![Screenshot (22)](https://user-images.githubusercontent.com/113874979/215343171-cc045a0f-c23d-4d55-808f-6dcc17fd818a.png)
 
-* Created dropdown with state and parkname selection
-
 * Created map using Leaflet that zooms to park boundaries based upon park selection
+![alt text](Screenshots/National%20Parks%20Web%20App%20Map.png)
+
+* Created dropdown with state and parkname selection
 
 * Added user location using Leaflet JavaScript Plugin Accurate Position for the initial site load
 
