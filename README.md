@@ -21,6 +21,10 @@ Our National Parks Web Application initially loads the web page with an accurate
 
 ## Process
 
+* The original data was retrived from the National Park Service website in a GeoJSON file that contained the data for over 400 national parks and historic sites.
+
+* The data was then transformed and Loaded into a Mongo Database.
+
 * Housed data in MongoDB
 ![Screenshot (24)](https://user-images.githubusercontent.com/113874979/215343549-7f30f6c0-aa25-4b94-b660-3e9dc5c866cf.png)
 
@@ -31,7 +35,7 @@ Our National Parks Web Application initially loads the web page with an accurate
 
 * Created map using Leaflet that zooms to park boundaries based upon park selection
 
-* Added user location using Leaflet accurate position for initial site load
+* Added user location using Leaflet JavaScript Plugin Accurate Position for the initial site load
 
 * Populated Twitter data for park selection
 
