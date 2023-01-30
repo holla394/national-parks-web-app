@@ -1,6 +1,5 @@
 from flask import Flask, render_template, jsonify
 import pymongo
-import logging
 import os
 
 # Create an instance of our Flask app.
@@ -53,11 +52,6 @@ def parkmeta(parkname):
 # List of park names API
 @app.route('/api/v1/allparknames')
 def parknames():
-    # allnames_results = []
-    # for i in range(0,429):
-    #     x = parknames.find_one({'parknumber':i})
-    #     print(x['parkname'], "\n",x['state'],"\n\n\n")
-    #     allnames_results.append({"parkname":x['parkname'],'state':x['state']})
     allnames_results = parknames_coll.find()
     parks_list = [(result['state'], result['parkname']) for result in allnames_results if (result['state'], result['parkname'])]
     n = len(parks_list)
@@ -74,12 +68,11 @@ def tweets_by_parkname(parkname):
     try:
         handle = match_data[0]['twitter']
         tweet_data = twitterdata.find(filter = {'park.username':handle})
-        # result_count = tweet_data[0]['mentionData']['meta']
         tweets = tweet_data[0]['mentionData']['data']
         tweet_text = [tweet['text'] for tweet in tweets]
         return tweet_text
     except:
-        return ["Error: No Tweets Found :(","HAHAHAHAHAHAHAH YOU SUCK!!!!","NO TWEETS FOR UUUUU"]
+        return ["Error: No Tweets Found"]
 
 if __name__ == "__main__":
     # change True to False when ready for deployment
