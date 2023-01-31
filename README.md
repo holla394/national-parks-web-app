@@ -22,25 +22,28 @@ Our National Parks Web Application initially loads the web page with an accurate
 ## Process
 
 * The original data was retrived from the National Park Service website in a GeoJSON file that contained the data for over 400 national parks and historic sites.
-
+#
 * The data was then transformed and Loaded into a Mongo Database.
-
+#
 * Housed data in MongoDB
 ![Screenshot (24)](https://user-images.githubusercontent.com/113874979/215343549-7f30f6c0-aa25-4b94-b660-3e9dc5c866cf.png)
-
+#
 * Used PyMongo with Render to host the web app
 ![Screenshot (22)](https://user-images.githubusercontent.com/113874979/215343171-cc045a0f-c23d-4d55-808f-6dcc17fd818a.png)
-
+#
 * Created map using Leaflet that zooms to park boundaries based upon park selection
 ![alt text](Screenshots/National%20Parks%20Web%20App%20Map.png)
-
+#
 * Created dropdown with state and parkname selection
 ![alt text](Screenshots/National%20Parks%20Web%20App%20Dropdown%20Menu.png)
-
+#
 * Added user location using Leaflet JavaScript Plugin Accurate Position for the initial site load
-
+#
 * Populated Twitter data for park selection
 
+
+![alt text](Screenshots/National%20Parks%20Web%20App%20Twitter%20Data.png)
+#
 * Populated metadata for park selection
 
 ## Authors
