@@ -1,6 +1,6 @@
 # National Parks Web Application
 
-Goal: To create an easy to use visual representation of the National Parks and Historic Sites in the US
+**Goal:** To create an easy to use visual representation of the National Parks and Historic Sites in the US
 
 ## Description
 
