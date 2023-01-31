@@ -40,6 +40,7 @@ Our National Parks Web Application initially loads the web page with an accurate
 * Added user location using Leaflet JavaScript Plugin Accurate Position for the initial site load
 
 * Populated Twitter data for park selection
+#
 ![alt text](Screenshots/National%20Parks%20Web%20App%20Twitter%20Data.png)
 
 * Populated metadata for park selection
