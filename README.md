@@ -54,5 +54,7 @@ Our National Parks Web Application initially loads the web page with an accurate
 ## Authors
 
 Sam Holland
+
 Paul Brichta
+
 Lindsey Wolterstorff
