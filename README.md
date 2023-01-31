@@ -42,9 +42,14 @@ Our National Parks Web Application initially loads the web page with an accurate
 * Populated Twitter data for park selection
 
 
+
 ![alt text](Screenshots/National%20Parks%20Web%20App%20Twitter%20Data.png)
 #
 * Populated metadata for park selection
+
+
+
+![alt text](Screenshots/National%20Parks%20Web%20App%20Metadata.png)
 
 ## Authors
 
